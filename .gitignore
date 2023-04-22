@@ -1,0 +1,48 @@
+# Compiled files
+*.tfstate
+*.tfstate.*
+
+# Module directory in any sub-folder
+**/.terraform
+
+# State file in any sub-folder
+**/terraform.tfstate
+**/terraform.tfstate.backup
+*.tfstate.lock.info
+
+# Terraform Variables
+*.tfvars
+
+# Ignored Terraform files
+*gitignore*.tf
+
+# SSH Keys
+*.pem
+
+*.DS_Store
+*.vagrant
+
+# Generated private key
+*.key
+
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Remove any built plugins
+vault/plugins
+
+
+!.vscode/launch.json
