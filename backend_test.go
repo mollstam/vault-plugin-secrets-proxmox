@@ -2,6 +2,7 @@ package proxmox
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"testing"
 	"time"
@@ -209,13 +210,19 @@ func (e *testEnv) ReadApiToken(t *testing.T) {
 	require.Nil(t, err)
 	require.NotNil(t, resp)
 
-	if t, ok := resp.Data["token_id"]; ok {
-		e.Tokens = append(e.Tokens, t.(string))
+	if to, ok := resp.Data["token_id"]; ok {
+		e.Tokens = append(e.Tokens, to.(string))
 	}
 	require.NotEmpty(t, resp.Data["token_id"])
 
 	if e.SecretToken != "" {
 		require.NotEqual(t, e.SecretToken, resp.Data["token_id"])
+	}
+
+	if fto, ok := resp.Data["token_id_full"]; ok {
+		require.Equal(t, fmt.Sprintf("%s@%s!%s", e.RoleUser, e.RoleRealm, resp.Data["token_id"].(string)), fto)
+	} else {
+		require.Fail(t, "missing full token id in creds response")
 	}
 
 	// collect secret IDs to revoke at end of test

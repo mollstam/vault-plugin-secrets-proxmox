@@ -63,9 +63,12 @@ func (b *proxmoxBackend) createUserCreds(ctx context.Context, req *logical.Reque
 		return nil, err
 	}
 
+	tokenIDFull := fmt.Sprintf("%s@%s!%s", role.User, role.Realm, token.TokenID)
+
 	resp := b.Secret(proxmoxTokenType).Response(map[string]interface{}{
-		"token_id": token.TokenID,
-		"secret":   token.Secret,
+		"token_id":      token.TokenID,
+		"token_id_full": tokenIDFull,
+		"secret":        token.Secret,
 	}, map[string]interface{}{
 		"token_id": token.TokenID,
 		"role":     role.Name,
